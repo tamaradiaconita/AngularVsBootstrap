@@ -1,0 +1,26 @@
+table {
+    width: 100%;
+}
+  
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+  
+td, th {
+    width: 25%;
+    text-align: center;
+}
+th.mat-header-cell {
+    text-align: center;
+    vertical-align: text-top;
+}
+
+.table-container {
+    margin: 5%;
+}
+
+.display-flex {
+    display: flex;
+    justify-content: space-between;
+}

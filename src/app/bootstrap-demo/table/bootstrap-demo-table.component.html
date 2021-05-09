@@ -1,0 +1,40 @@
+
+<form class="d-flex">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" (keyup)="applyFilter($event)">
+
+</form>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Country</th>
+    <th scope="col">Area</th>
+    <th scope="col">Population</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of pagData">
+        <th scope="row">{{ user.id }}</th>
+        <td>
+        {{ user.name }}
+        </td>
+        <td>{{ user.progress }}</td>
+        <td>{{ user.color }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" (click)="changePage('previous')">
+            <a class="page-link" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item" *ngFor="let i of [1, 2, 3]"
+            (click)="changePage(i.toString())">
+            <a class="page-link" >{{ i }}</a>
+        </li>
+        <li class="page-item" (click)="changePage('next')">
+            <a class="page-link">Next</a>
+        </li>
+    </ul>
+</nav>
