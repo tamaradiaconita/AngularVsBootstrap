@@ -1,4 +1,5 @@
 import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY_PROVIDER_FACTORY } from '@angular/cdk/overlay/overlay-directives';
+import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, ViewChild } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -6,7 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationDialogComponent } from 'src/app/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { EditUserDialogComponent } from 'src/app/dialogs/edit-user-dialog/edit-user-dialog.component';
-
+declare var $:any;
 export interface UserData {
   id: string;
   name: string;
@@ -41,10 +42,12 @@ export class BootstrapDemoTableComponent {
 
   public currentPage = 1;
 
+  public selectedUser: UserData | undefined;
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dialog: MatDialog) {
+  constructor() {
     // Create 100 users
     const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
 
@@ -59,21 +62,6 @@ export class BootstrapDemoTableComponent {
       .filter(user => user.name.trim().toLowerCase().indexOf(filterValue.toLowerCase()) !== -1)
       .slice(10 * (this.currentPage - 1), 10 * this.currentPage);
   }
-  
-  public deleteUser(row: UserData) {
-    let dialogRef = this.dialog.open(ConfirmationDialogComponent);
-
-  }
-
-  public editUser(row: UserData) {
-    let dialogRef = this.dialog.open(EditUserDialogComponent);
-
-    dialogRef.afterClosed().subscribe((result: string) => {
-      if(result) {
-        row.name = result;
-      }
-    });
-  }
 
   public changePage(page: string) {
     if(page === 'previous' && this.currentPage > 1) {
@@ -87,6 +75,22 @@ export class BootstrapDemoTableComponent {
     }
 
     this.pagData = this.users.slice(10 * (this.currentPage - 1), 10 * this.currentPage)
+  }
+
+  public selectUser(user: UserData) {
+    this.selectedUser = user;
+  }
+
+  public deleteUser() {
+    const idx = this.users.findIndex((user: UserData) => this.selectedUser?.id === user.id);
+    this.users = this.users.slice(0, idx).concat(this.users.slice(idx + 1, this.users.length));
+    this.pagData = this.users.slice(0, 10);
+  }
+
+  public editUser() {
+    let userToEdit: any = this.pagData.find((user: UserData) => user.id === this.selectedUser?.id);
+
+    userToEdit.name = (document.getElementById("new-username") as HTMLInputElement).value;
   }
 }
 
