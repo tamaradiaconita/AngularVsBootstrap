@@ -1,29 +1,25 @@
 
 <form class="example-form" (ngSubmit)="onSubmit()">
     <div fxLayout="column" [formGroup]="userFormGroup">
-        <div>
-            <mat-form-field class="example-full-width">
-                <input matInput required placeholder="First Name" formControlName="firstName">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field class="example-full-width">
-                <input matInput required placeholder="Last Name" formControlName="lastName">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field class="example-full-width">
-                <input matInput required type="email" placeholder="Email" formControlName="email">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field class="example-full-width">
-                <input matInput required formControlName="birthdate" [matDatepicker]="picker">
-                <mat-label>Choose your birthdate</mat-label>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-        </div>
+        <mat-form-field class="example-full-width">
+            <input matInput required placeholder="First Name" formControlName="firstName">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <input matInput required placeholder="Last Name" formControlName="lastName">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <input matInput required type="email" placeholder="Email" formControlName="email">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <input matInput required formControlName="birthdate" [matDatepicker]="picker">
+            <mat-label>Choose your birthdate</mat-label>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
         <div>
             <mat-label>Gender</mat-label>
             <div>
@@ -33,18 +29,16 @@
                 </mat-radio-group>
             </div>
         </div>
-        <div>
-            <mat-form-field class="example-full-width">
-                <mat-label>Country</mat-label>
-                <input matInput required formControlName="country" [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                    <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
-                        {{ country.name }}
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
 
-        </div>
+        <mat-form-field class="example-full-width">
+            <mat-label>Country</mat-label>
+            <input matInput required formControlName="country" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+                    {{ country.name }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
     </div>
 
     <button mat-raised-button color="primary" type="submit" [disabled]="!userFormGroup.valid">Submit</button>
